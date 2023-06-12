@@ -51,4 +51,4 @@ MonoBehaviour:
   prefab_iron: {fileID: 2195679341211529777, guid: 1a332f35a00712c43a656ad2a9104cc4, type: 3}
   prefab_gold: {fileID: 8400574092744778783, guid: 719ca4249575114429dd052827883245, type: 3}
   prefab_diamond: {fileID: 6773117648268859223, guid: 9a392d07b2a96a243869ae3a987e691a, type: 3}
-  depth: 0
+  depth: 150
