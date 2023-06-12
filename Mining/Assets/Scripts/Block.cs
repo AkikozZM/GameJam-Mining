@@ -7,6 +7,11 @@ public class Block : MonoBehaviour
     public int durability;
     public string type;
     public ScoreManager scoreManager;
+    private void Start()
+    {
+        GameObject scoreManagerObj = GameObject.Find("Canvas");
+        scoreManager = scoreManagerObj.GetComponent<ScoreManager>();
+    }
     public void TakeHit(int hit)
     {
         durability -= hit;
@@ -19,14 +24,17 @@ public class Block : MonoBehaviour
     {
         switch(type)
         {
-            case "dirt":
-                scoreManager.addDirtPoints(1);
+            case "copper":
+                scoreManager.addCopperPoints(1);
                 break;
-            case "green":
-                scoreManager.addGreenPoints(1);
+            case "iron":
+                scoreManager.addIronPoints(1);
                 break;
-            case "blue":
-                scoreManager.addBluePoints(1);
+            case "gold":
+                scoreManager.addGoldPoints(1);
+                break;
+            case "diamond":
+                scoreManager.addDiamondPoints(1);
                 break;
         }
     }

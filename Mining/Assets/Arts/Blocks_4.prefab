@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 2
+  type: gold
+  scoreManager: {fileID: 0}

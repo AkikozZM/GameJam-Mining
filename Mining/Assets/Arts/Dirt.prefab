@@ -125,4 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 1
-  type: dirt
+  type: copper
+  scoreManager: {fileID: 0}

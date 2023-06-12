@@ -8,7 +8,42 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject spwan;
     public GameObject dig;
+    public GameObject bag;
+    public ScoreManager scoreManager;
+    public int collectionPoints;
+    public GameObject pickaxe_starter;
+    public GameObject pickaxe_copper;
+    public GameObject pickaxe_iron;
+    public GameObject pickaxe_gold;
+    public GameObject pickaxe_diamond;
+
+
     private bool isActionInProgress = false;
+    private GameObject[] bagArray = new GameObject[4];
+
+    public class axeObj
+    {
+        public GameObject axe;
+        public int weight;
+    }
+
+    private void Start()
+    {
+        createStarter();
+    }
+    private void createStarter()
+    {
+        //instantiate starter axe
+        pickaxe_starter = Instantiate(pickaxe_starter);
+        pickaxe_starter.transform.SetParent(dig.transform);
+        pickaxe_starter.transform.localPosition = new Vector3(0, 0, 0);
+    }
+    private void createCopper()
+    {
+        pickaxe_copper = Instantiate(pickaxe_copper);
+        pickaxe_copper.transform.SetParent(dig.transform);
+        pickaxe_copper.transform.localPosition = new Vector3(0, 0, 0);
+    }
     void Update()
     {
         if (!OnGround())
@@ -22,6 +57,50 @@ public class PlayerController : MonoBehaviour
         if (!isActionInProgress)
         {
             StartCoroutine(PlayerAction());
+        }
+        //create diggers
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CreateDigger();
+        }
+        
+    }
+    private GameObject getCurrentAxe()
+    {
+        GameObject curr = dig.GetComponentInChildren<GameObject>();
+        return curr;
+    }
+    private void moveToBag(GameObject axe)
+    {
+        axe.transform.SetParent(bag.transform);
+        axe.SetActive(false);
+    }
+    private void pickOneAxeToHand()
+    {
+
+    }
+    private void CreateDigger()
+    {
+        if (scoreManager.getDiamondPoints() >= collectionPoints)
+        {
+            scoreManager.subtractDiamondPoints(collectionPoints);
+        }        
+        else if (scoreManager.getGoldPoints() >= collectionPoints)
+        {
+            scoreManager.subtractGoldPoints(collectionPoints);
+        }
+        else if (scoreManager.getIronPoints() >= collectionPoints)
+        {
+            scoreManager.subtractIronPoints(collectionPoints);
+        }
+        else if (scoreManager.getCopperPoints() >= collectionPoints)
+        {
+            scoreManager.subtractCopperPoints(collectionPoints);
+            createCopper();
+            //get current axe
+            GameObject currAxe = getCurrentAxe();
+            moveToBag(currAxe);
+
         }
     }
     private void StartAction()

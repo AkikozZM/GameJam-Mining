@@ -125,5 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 2
-  type: green
+  type: iron
   scoreManager: {fileID: 0}
