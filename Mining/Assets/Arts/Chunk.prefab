@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2314724274278213016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2314724274278213019}
+  - component: {fileID: 2314724274278213018}
+  m_Layer: 0
+  m_Name: Chunk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2314724274278213019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2314724274278213016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2314724274278213018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2314724274278213016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09626e9ba4a174b249318aa1b9b0f9c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab_empty: {fileID: 467458132692748610, guid: 6997661e271e0432c8cb347559a14f0b, type: 3}
+  prefab_stone: {fileID: 6915386075821760196, guid: fc88833145e64484b96a4ff99489fdf4, type: 3}
+  prefab_dirt: {fileID: 3966256084723428227, guid: cd8071efa9a6a4162b4e9a672771452d, type: 3}
+  prefab_copper: {fileID: 7683785535513857831, guid: df68114f6b7714733b016c54ef9a9ffb, type: 3}
+  prefab_iron: {fileID: 302695611155283189, guid: 21892887d0ed541af8272a9ad6e77f3b, type: 3}
+  prefab_gold: {fileID: 1019792782681931321, guid: 882afacdec4bb408b8f6f5244d901260, type: 3}
+  prefab_diamond: {fileID: 5653477839373086121, guid: 5206dbdcec07040549e3300c450c843f, type: 3}
+  depth: 0
