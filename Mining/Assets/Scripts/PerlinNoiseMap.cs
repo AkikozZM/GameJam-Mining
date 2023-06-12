@@ -12,6 +12,10 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject prefab_dirt;
     public GameObject prefab_copper;
     public GameObject prefab_iron;
+    public GameObject prefab_gold;
+    public GameObject prefab_diamond;
+
+    public int depth = 0;
 
     int map_width =7;
     int map_height = 100;
@@ -26,6 +30,11 @@ public class PerlinNoiseMap : MonoBehaviour
     
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
+
+    public PerlinNoiseMap(int depth)
+    {
+        this.depth = depth;
+    }
        // Start is called before the first frame update
     public void Start()
     {
@@ -34,6 +43,8 @@ public class PerlinNoiseMap : MonoBehaviour
         GenerateMap();
         GenerateCopper();
         GenerateIron();
+        GenerateGold();
+        GenerateDiamond();
     }
 
     public void CreateTileset() {
@@ -43,6 +54,8 @@ public class PerlinNoiseMap : MonoBehaviour
         tileset.Add(2, prefab_stone);
         tileset.Add(3, prefab_copper);
         tileset.Add(4, prefab_iron);
+        tileset.Add(5, prefab_gold);
+        tileset.Add(6, prefab_diamond);
     }
 
     public void CreateTileGroups() {
@@ -56,13 +69,14 @@ public class PerlinNoiseMap : MonoBehaviour
     }
 
     public void GenerateMap() {
+        int seed = UnityEngine.Random.Range(0, 9999);
         for (int x = 0; x < map_width; x++)
         {
             noise_grid.Add(new List<int>());
             tile_grid.Add(new List<GameObject>());
             for (int y = 0; y < map_height; y++)
             {
-                int tile_id = GetIdUsingPerlinCaves(x, y);
+                int tile_id = GetIdUsingPerlinCaves(x, y, seed);
                 noise_grid[x].Add(tile_id);
                 CreateTile(tile_id, x, y);
             }
@@ -115,30 +129,106 @@ public class PerlinNoiseMap : MonoBehaviour
 
     }
 
-    int GetIdUsingPerlinCaves(int x, int y)
+    public void GenerateGold()
+    {
+        int seed = UnityEngine.Random.Range(0, 9999);
+        for (int x = 0; x < map_width; x++)
+        {
+            for (int y = 0; y < map_height; y++)
+            {
+                if (noise_grid[x][y] != 0)
+                {
+                    int tile_id = GetIdUsingPerlinGold(x, y, seed);
+                    if (tile_id != -1)
+                    {
+                        noise_grid[x].Add(tile_id);
+                        CreateTile(tile_id, x, y);
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    public void GenerateDiamond()
+    {
+        int seed = UnityEngine.Random.Range(0, 9999);
+        for (int x = 0; x < map_width; x++)
+        {
+            for (int y = 0; y < map_height; y++)
+            {
+                if (noise_grid[x][y] != 0)
+                {
+                    int tile_id = GetIdUsingPerlinDiamond(x, y, seed);
+                    if (tile_id != -1)
+                    {
+                        noise_grid[x].Add(tile_id);
+                        CreateTile(tile_id, x, y);
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    int GetIdUsingPerlinCaves(int x, int y, int seed)
     {
      
         float raw_perlin = Mathf.PerlinNoise(
-            (x - x_offset) / magnification,
-            (y - y_offset) / magnification
+            (x - seed) / magnification,
+            (y - seed) / magnification
         );
-        //print(raw_perlin);
-
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        //float scale_perlin = clamp_perlin * tileset.Count;
-        if (clamp_perlin < 0.5)
+        if (this.depth < 30)
         {
-            return 0;
+            if (clamp_perlin < 0.5)
+            {
+                return 0;
+            }
+            else if (clamp_perlin >= 0.5 && clamp_perlin < 0.9)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
         }
-        else if (clamp_perlin >= 0.5 && clamp_perlin < 0.8)
+        else if(this.depth < 70)
         {
-            return 1;
+            if (clamp_perlin < 0.4)
+            {
+                return 0;
+            }
+            else if (clamp_perlin >= 0.4 && clamp_perlin < 0.85)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
         }
+
+
+        //All lower depths
         else
         {
-            return 2;
+            if (clamp_perlin < 0.3)
+            {
+                return 0;
+            }
+            else if (clamp_perlin >= 0.3 && clamp_perlin < 0.7)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
         }
-        
     }
 
     int GetIdUsingPerlinCopper(int x, int y, int seed)
@@ -149,17 +239,47 @@ public class PerlinNoiseMap : MonoBehaviour
         );
 
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        //print(clamp_perlin);
-        //float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (clamp_perlin > .7)
-        {
-            return 3;
-        }
-        else
+        if (this.depth < 30)
         {
             return -1;
         }
+        else if (this.depth< 70)
+        {
+            if (clamp_perlin > .85)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        else if (this.depth < 150)
+        {
+            if (clamp_perlin > .8)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            if (clamp_perlin > .7)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+
     }
 
     int GetIdUsingPerlinIron(int x, int y, int seed)
@@ -173,14 +293,152 @@ public class PerlinNoiseMap : MonoBehaviour
         //print(clamp_perlin);
         //float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (clamp_perlin > .85)
-        {
-            return 4;
-        }
-        else
+
+        //Min depth of being able to spawn
+        if (this.depth < 50)
         {
             return -1;
         }
+        else if (this.depth < 100)
+        {
+            if (clamp_perlin > .85)
+            {
+                return 4;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        else if (this.depth < 150)
+        {
+            if (clamp_perlin > .8)
+            {
+                return 4;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            if (clamp_perlin > .75)
+            {
+                return 4;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+    }
+
+    int GetIdUsingPerlinGold(int x, int y, int seed)
+    {
+        float raw_perlin = Mathf.PerlinNoise(
+            (x + seed) / magnification,
+            (y + seed) / magnification
+        );
+
+        float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
+        //print(clamp_perlin);
+        //float scale_perlin = clamp_perlin * tileset.Count;
+
+        if (this.depth < 100)
+        {
+            return -1;
+        }
+        else if (this.depth < 150)
+        {
+            if (clamp_perlin > .9)
+            {
+                return 5;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        else if (this.depth < 200)
+        {
+            if (clamp_perlin > .8)
+            {
+                return 5;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            if (clamp_perlin > .7)
+            {
+                return 5;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+    }
+
+
+    int GetIdUsingPerlinDiamond(int x, int y, int seed)
+    {
+        float raw_perlin = Mathf.PerlinNoise(
+            (x + seed) / magnification,
+            (y + seed) / magnification
+        );
+
+        float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
+        //print(clamp_perlin);
+        //float scale_perlin = clamp_perlin * tileset.Count;
+
+        if (this.depth < 150)
+        {
+            return -1;
+        }
+        else if (this.depth < 200)
+        {
+            if (clamp_perlin > .85)
+            {
+                return 6;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        else if (this.depth < 250)
+        {
+            if (clamp_perlin > .8)
+            {
+                return 6;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            if (clamp_perlin > .7)
+            {
+                return 6;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
     }
 
     void CreateTile(int tile_id, int x, int y)
