@@ -31,10 +31,6 @@ public class PerlinNoiseMap : MonoBehaviour
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
 
-    public PerlinNoiseMap(int depth)
-    {
-        this.depth = depth;
-    }
        // Start is called before the first frame update
     public void Start()
     {
@@ -183,11 +179,11 @@ public class PerlinNoiseMap : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         if (this.depth < 30)
         {
-            if (clamp_perlin < 0.5)
+            if (clamp_perlin < 0.3)
             {
                 return 0;
             }
-            else if (clamp_perlin >= 0.5 && clamp_perlin < 0.9)
+            else if (clamp_perlin >= 0.3 && clamp_perlin < 0.9)
             {
                 return 1;
             }

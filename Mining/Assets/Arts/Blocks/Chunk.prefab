@@ -41,14 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2314724274278213016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09626e9ba4a174b249318aa1b9b0f9c6, type: 3}
+  m_Script: {fileID: 11500000, guid: d6880890ffc25dc4699927360d912454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab_empty: {fileID: 467458132692748610, guid: 6997661e271e0432c8cb347559a14f0b, type: 3}
-  prefab_stone: {fileID: 6915386075821760196, guid: fc88833145e64484b96a4ff99489fdf4, type: 3}
-  prefab_dirt: {fileID: 3966256084723428227, guid: cd8071efa9a6a4162b4e9a672771452d, type: 3}
-  prefab_copper: {fileID: 7683785535513857831, guid: df68114f6b7714733b016c54ef9a9ffb, type: 3}
-  prefab_iron: {fileID: 302695611155283189, guid: 21892887d0ed541af8272a9ad6e77f3b, type: 3}
-  prefab_gold: {fileID: 1019792782681931321, guid: 882afacdec4bb408b8f6f5244d901260, type: 3}
-  prefab_diamond: {fileID: 5653477839373086121, guid: 5206dbdcec07040549e3300c450c843f, type: 3}
-  depth: 0
+  prefab_empty: {fileID: 4727937791180669055, guid: bd3901340f680fc4982e09dd56fd8425, type: 3}
+  prefab_stone: {fileID: 2195679341211529777, guid: 1a332f35a00712c43a656ad2a9104cc4, type: 3}
+  prefab_dirt: {fileID: 4206479363257243079, guid: 20f264e96e87a294fb85b92ba2c0c742, type: 3}
+  prefab_copper: {fileID: 8649588122739145636, guid: 66f259b2093af724882716b580bb1057, type: 3}
+  prefab_iron: {fileID: 2195679341211529777, guid: 1a332f35a00712c43a656ad2a9104cc4, type: 3}
+  prefab_gold: {fileID: 8400574092744778783, guid: 719ca4249575114429dd052827883245, type: 3}
+  prefab_diamond: {fileID: 6773117648268859223, guid: 9a392d07b2a96a243869ae3a987e691a, type: 3}
+  depth: 150

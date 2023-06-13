@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     public GameObject spwan;
     public GameObject dig;
     public GameObject bag;
-    public ScoreManager scoreManager;
     public int collectionPoints;
     public GameObject pickaxe_starter;
     public GameObject pickaxe_copper;
@@ -17,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public GameObject pickaxe_gold;
     public GameObject pickaxe_diamond;
 
-
+    private ScoreManager scoreManager;
     private bool isActionInProgress = false;
     private GameObject[] bagArray = new GameObject[4];
 
@@ -30,6 +29,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         createStarter();
+        GameObject scoreManagerObj = GameObject.Find("Canvas");
+        scoreManager = scoreManagerObj.GetComponent<ScoreManager>();
     }
     private void createStarter()
     {
@@ -43,6 +44,24 @@ public class PlayerController : MonoBehaviour
         pickaxe_copper = Instantiate(pickaxe_copper);
         pickaxe_copper.transform.SetParent(dig.transform);
         pickaxe_copper.transform.localPosition = new Vector3(0, 0, 0);
+    }
+    private void createIron()
+    {
+        pickaxe_iron = Instantiate(pickaxe_iron);
+        pickaxe_iron.transform.SetParent(dig.transform);
+        pickaxe_iron.transform.localPosition = new Vector3(0, 0, 0);
+    }
+    private void createGold()
+    {
+        pickaxe_gold = Instantiate(pickaxe_gold);
+        pickaxe_gold.transform.SetParent(dig.transform);
+        pickaxe_gold.transform.localPosition = new Vector3(0, 0, 0);
+    }
+    private void createDiamond()
+    {
+        pickaxe_diamond = Instantiate(pickaxe_diamond);
+        pickaxe_diamond.transform.SetParent(dig.transform);
+        pickaxe_diamond.transform.localPosition = new Vector3(0, 0, 0);
     }
     void Update()
     {
@@ -67,8 +86,21 @@ public class PlayerController : MonoBehaviour
     }
     private GameObject getCurrentAxe()
     {
-        GameObject curr = dig.GetComponentInChildren<GameObject>();
-        return curr;
+        Transform[] curr = dig.GetComponentsInChildren<Transform>();
+        GameObject ret = curr[1].gameObject;
+        return ret;
+    }
+    private GameObject[] getCurrentAxeInBag()
+    {
+        Transform[] curr = bag.GetComponentsInChildren<Transform>();
+        GameObject[] ret = new GameObject[curr.Length];
+        int i = 0;
+        foreach(Transform obj in curr)
+        {
+            ret[i] = obj.gameObject;
+            i++;
+        }
+        return ret;
     }
     private void moveToBag(GameObject axe)
     {
@@ -84,23 +116,46 @@ public class PlayerController : MonoBehaviour
         if (scoreManager.getDiamondPoints() >= collectionPoints)
         {
             scoreManager.subtractDiamondPoints(collectionPoints);
+            //get current axe
+            GameObject currAxe = getCurrentAxe();
+            moveToBag(currAxe);
+            //create iron axe
+            createDiamond();
         }        
         else if (scoreManager.getGoldPoints() >= collectionPoints)
         {
             scoreManager.subtractGoldPoints(collectionPoints);
+            //get current axe
+            GameObject currAxe = getCurrentAxe();
+            moveToBag(currAxe);
+            //create iron axe
+            createGold();
         }
         else if (scoreManager.getIronPoints() >= collectionPoints)
         {
             scoreManager.subtractIronPoints(collectionPoints);
-        }
-        else if (scoreManager.getCopperPoints() >= collectionPoints)
-        {
-            scoreManager.subtractCopperPoints(collectionPoints);
-            createCopper();
             //get current axe
             GameObject currAxe = getCurrentAxe();
             moveToBag(currAxe);
+            //create iron axe
+            createIron();
+        }
+        else if (scoreManager.getCopperPoints() >= collectionPoints)
+        {
+            //need to check if my current bag already has copper axe first
 
+
+            //if not, create a new copper axe
+            scoreManager.subtractCopperPoints(collectionPoints);
+            //get current axe
+            GameObject currAxe = getCurrentAxe();
+            moveToBag(currAxe);
+            //create copper axe
+            createCopper();
+        }
+        else
+        {
+            Debug.Log("Don't have enough points.");
         }
     }
     private void StartAction()
