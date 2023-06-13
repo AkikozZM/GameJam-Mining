@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
         {
             CreateDigger();
         }
-        
     }
     private GameObject getCurrentAxe()
     {
@@ -92,15 +91,31 @@ public class PlayerController : MonoBehaviour
     }
     private GameObject[] getCurrentAxeInBag()
     {
-        Transform[] curr = bag.GetComponentsInChildren<Transform>();
-        GameObject[] ret = new GameObject[curr.Length];
-        int i = 0;
-        foreach(Transform obj in curr)
+        int n = bag.transform.childCount;
+        GameObject[] ret = new GameObject[n];
+        for (int i = 0; i < n; i++)
         {
-            ret[i] = obj.gameObject;
-            i++;
+            Transform t = bag.transform.GetChild(i);
+            ret[i] = t.gameObject;
         }
         return ret;
+    }
+    private bool checkAxeInHand(string axe)
+    {
+        if (dig.transform.Find(axe) != null)
+        {
+            return true;
+        }
+        return false;
+    }
+    private bool checkAxeInBag(string axe)
+    {
+        if (bag.transform.Find(axe) != null)
+        {
+            Debug.Log("true");
+            return true;
+        } 
+        return false;
     }
     private void moveToBag(GameObject axe)
     {
@@ -115,43 +130,77 @@ public class PlayerController : MonoBehaviour
     {
         if (scoreManager.getDiamondPoints() >= collectionPoints)
         {
-            scoreManager.subtractDiamondPoints(collectionPoints);
-            //get current axe
-            GameObject currAxe = getCurrentAxe();
-            moveToBag(currAxe);
-            //create iron axe
-            createDiamond();
+            if (checkAxeInBag("Dig_diamond(Clone)") || checkAxeInHand("Dig_diamond(Clone)"))
+            {
+                pickaxe_diamond.GetComponent<Digger>().durability += collectionPoints;
+                scoreManager.subtractDiamondPoints(collectionPoints);
+            }
+            else
+            {
+                scoreManager.subtractDiamondPoints(collectionPoints);
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                //create diamond axe
+                createDiamond();
+            }
         }        
         else if (scoreManager.getGoldPoints() >= collectionPoints)
         {
-            scoreManager.subtractGoldPoints(collectionPoints);
-            //get current axe
-            GameObject currAxe = getCurrentAxe();
-            moveToBag(currAxe);
-            //create iron axe
-            createGold();
+            if (checkAxeInBag("Dig_gold(Clone)") || checkAxeInHand("Dig_gold(Clone)"))
+            {
+                pickaxe_gold.GetComponent<Digger>().durability += collectionPoints;
+                scoreManager.subtractGoldPoints(collectionPoints);
+            } 
+            else
+            {
+                scoreManager.subtractGoldPoints(collectionPoints);
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                //create gold axe
+                createGold();
+            }
+
         }
         else if (scoreManager.getIronPoints() >= collectionPoints)
         {
-            scoreManager.subtractIronPoints(collectionPoints);
-            //get current axe
-            GameObject currAxe = getCurrentAxe();
-            moveToBag(currAxe);
-            //create iron axe
-            createIron();
+            if (checkAxeInBag("Dig_iron(Clone)") || checkAxeInHand("Dig_iron(Clone)"))
+            {
+                pickaxe_iron.GetComponent<Digger>().durability += collectionPoints;
+                scoreManager.subtractIronPoints(collectionPoints);
+            }
+            else
+            {
+                scoreManager.subtractIronPoints(collectionPoints);
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                //create iron axe
+                createIron();
+            }
         }
         else if (scoreManager.getCopperPoints() >= collectionPoints)
         {
             //need to check if my current bag already has copper axe first
-
-
-            //if not, create a new copper axe
-            scoreManager.subtractCopperPoints(collectionPoints);
-            //get current axe
-            GameObject currAxe = getCurrentAxe();
-            moveToBag(currAxe);
-            //create copper axe
-            createCopper();
+            //or if my hand has this pickaxe
+            if (checkAxeInBag("Dig_copper(Clone)") || checkAxeInHand("Dig_copper(Clone)"))
+            {
+                //just increase the durability of this axe
+                pickaxe_copper.GetComponent<Digger>().durability += collectionPoints;
+                //and consume current collection pts
+                scoreManager.subtractCopperPoints(collectionPoints);
+            }
+            else
+            {
+                //if not, create a new copper axe
+                scoreManager.subtractCopperPoints(collectionPoints);
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                //create copper axe
+                createCopper();
+            }
         }
         else
         {

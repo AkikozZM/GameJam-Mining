@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spwan: {fileID: 0}
   dig: {fileID: 0}
-  scoreManager: {fileID: 0}
+  bag: {fileID: 0}
   collectionPoints: 0
   pickaxe_starter: {fileID: 0}
   pickaxe_copper: {fileID: 0}
