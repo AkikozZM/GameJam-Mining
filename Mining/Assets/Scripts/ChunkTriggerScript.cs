@@ -8,9 +8,8 @@ public class ChunkTriggerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        generation = GameObject.FindGameObjectWithTag("Spawn").GetComponent<ChunkGeneration>();
-
-
+        GameObject temp = GameObject.Find("Spawn");
+        generation = temp.transform.Find("ChunkGenerator").GetComponent<ChunkGeneration>();
     }
 
     // Update is called once per frame

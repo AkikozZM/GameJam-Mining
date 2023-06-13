@@ -179,11 +179,11 @@ public class PerlinNoiseMap : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         if (this.depth < 30)
         {
-            if (clamp_perlin < 0.3)
+            if (clamp_perlin < 0.5)
             {
                 return 0;
             }
-            else if (clamp_perlin >= 0.3 && clamp_perlin < 0.9)
+            else if (clamp_perlin >= 0.5 && clamp_perlin < 0.9)
             {
                 return 1;
             }

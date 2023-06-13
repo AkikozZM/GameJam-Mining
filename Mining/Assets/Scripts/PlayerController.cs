@@ -31,7 +31,9 @@ public class PlayerController : MonoBehaviour
         createStarter();
         GameObject scoreManagerObj = GameObject.Find("Canvas");
         scoreManager = scoreManagerObj.GetComponent<ScoreManager>();
+        
     }
+ 
     private void createStarter()
     {
         //instantiate starter axe
@@ -215,7 +217,7 @@ public class PlayerController : MonoBehaviour
     {
         isActionInProgress= false;
     }
-    private void BlocksMoveUp()
+    public void BlocksMoveUp()
     {
         spwan.transform.position += new Vector3(0f, 1f, 0f);
     }
