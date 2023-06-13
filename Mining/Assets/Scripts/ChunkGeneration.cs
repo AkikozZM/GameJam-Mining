@@ -8,6 +8,8 @@ public class ChunkGeneration : MonoBehaviour
     public GameObject spawn;
     public float spawnRate = 10;
     public float timer = 0;
+    public float depth = 0;
+    public float count = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,22 +20,13 @@ public class ChunkGeneration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer < spawnRate)
-        {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            spawnChunk();
-            timer = 0;
-        }
         
     }
 
-    void spawnChunk()
+    public void spawnChunk()
     {
-        GameObject prefab = Instantiate(chunk, transform.position, transform.rotation);
-        setParent(prefab);
+        chunk = Instantiate(chunk, transform.position, transform.rotation);
+        setParent(chunk);
     }
 
     void setParent (GameObject chunk)
