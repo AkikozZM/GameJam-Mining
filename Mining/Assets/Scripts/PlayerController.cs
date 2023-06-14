@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public GameObject pickaxe_iron;
     public GameObject pickaxe_gold;
     public GameObject pickaxe_diamond;
+    public int depth;
 
     private ScoreManager scoreManager;
     private bool isActionInProgress = false;
@@ -306,6 +307,7 @@ public class PlayerController : MonoBehaviour
     public void BlocksMoveUp()
     {
         spwan.transform.position += new Vector3(0f, 1f, 0f);
+        depth++;
     }
     private IEnumerator PlayerAction()
     {
