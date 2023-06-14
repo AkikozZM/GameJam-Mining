@@ -19,7 +19,7 @@ public class GameSceneTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("111");
+       // Debug.Log("111");
         controller.BlocksMoveUp();
         controller.transform.Translate(0f, 1f, 0);
 

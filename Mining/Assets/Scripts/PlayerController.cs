@@ -1,6 +1,9 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -18,13 +21,8 @@ public class PlayerController : MonoBehaviour
 
     private ScoreManager scoreManager;
     private bool isActionInProgress = false;
-    private GameObject[] bagArray = new GameObject[4];
 
-    public class axeObj
-    {
-        public GameObject axe;
-        public int weight;
-    }
+    public static bool needToSwitch = false;
 
     private void Start()
     {
@@ -84,6 +82,32 @@ public class PlayerController : MonoBehaviour
         {
             CreateDigger();
         }
+        if (needToSwitch)
+        {
+            needToSwitch = false;
+            GameObject curr = getCurrentAxe();
+            moveToBag(curr);
+            GameObject pick = pickOneAxeToHand();
+            moveToHand(pick);
+        }
+        scoreManager.setCurrentAxeName(getCurrentAxeName(getCurrentAxe()));
+    }
+    private string getCurrentAxeName(GameObject axe)
+    {
+        switch(axe.name)
+        {
+            case "Dig_diamond(Clone)":
+                return "DiamondAxe";
+            case "Dig_gold(Clone)":
+                return "GoldAxe";
+            case "Dig_iron(Clone)":
+                return "IronAxe";
+            case "Dig_copper(Clone)":
+                return "CopperAxe";
+            case "Dig_starter(Clone)":
+                return "Starter";
+        }
+        return null;
     }
     private GameObject getCurrentAxe()
     {
@@ -124,9 +148,47 @@ public class PlayerController : MonoBehaviour
         axe.transform.SetParent(bag.transform);
         axe.SetActive(false);
     }
-    private void pickOneAxeToHand()
+    private void moveToHand(GameObject axe)
     {
-
+        axe.transform.SetParent(dig.transform);
+        axe.SetActive(true);
+    }
+    public GameObject pickOneAxeToHand()
+    {
+        
+        GameObject[] axes = this.getCurrentAxeInBag();
+        Dictionary<int, GameObject> map = new Dictionary<int, GameObject>();
+        foreach (GameObject axe in axes)
+        {
+            if (axe.gameObject.GetComponent<Digger>().quality == 5
+                && axe.gameObject.GetComponent<Digger>().durability != 0)
+            {
+                map[5] = axe;
+            } else if (axe.gameObject.GetComponent<Digger>().quality == 4
+                && axe.gameObject.GetComponent<Digger>().durability != 0)
+            {
+                map[4] = axe;
+            } else if (axe.gameObject.GetComponent<Digger>().quality == 3
+                && axe.gameObject.GetComponent<Digger>().durability != 0)
+            {
+                map[3] = axe;
+            } else if (axe.gameObject.GetComponent<Digger>().quality == 2
+                && axe.gameObject.GetComponent<Digger>().durability != 0)
+            {
+                map[2] = axe;
+            } else if (axe.gameObject.GetComponent<Digger>().quality == 1)
+            {
+                map[1] = axe;
+            }
+        }
+        for (int i = 5; i > 1; i--)
+        {
+            if (map.ContainsKey(i))
+            {
+                return map[i];
+            } 
+        }
+        return map[1];
     }
     private void CreateDigger()
     {
@@ -136,6 +198,12 @@ public class PlayerController : MonoBehaviour
             {
                 pickaxe_diamond.GetComponent<Digger>().durability += collectionPoints;
                 scoreManager.subtractDiamondPoints(collectionPoints);
+                //and move a best choice axe to hand
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                GameObject pick = pickOneAxeToHand();
+                moveToHand(pick);
             }
             else
             {
@@ -153,6 +221,12 @@ public class PlayerController : MonoBehaviour
             {
                 pickaxe_gold.GetComponent<Digger>().durability += collectionPoints;
                 scoreManager.subtractGoldPoints(collectionPoints);
+                //and move a best choice axe to hand
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                GameObject pick = pickOneAxeToHand();
+                moveToHand(pick);
             } 
             else
             {
@@ -171,6 +245,12 @@ public class PlayerController : MonoBehaviour
             {
                 pickaxe_iron.GetComponent<Digger>().durability += collectionPoints;
                 scoreManager.subtractIronPoints(collectionPoints);
+                //and move a best choice axe to hand
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                GameObject pick = pickOneAxeToHand();
+                moveToHand(pick);
             }
             else
             {
@@ -192,6 +272,12 @@ public class PlayerController : MonoBehaviour
                 pickaxe_copper.GetComponent<Digger>().durability += collectionPoints;
                 //and consume current collection pts
                 scoreManager.subtractCopperPoints(collectionPoints);
+                //and move a best choice axe to hand
+                //get current axe
+                GameObject currAxe = getCurrentAxe();
+                moveToBag(currAxe);
+                GameObject pick = pickOneAxeToHand();
+                moveToHand(pick);
             }
             else
             {
@@ -329,5 +415,10 @@ public class PlayerController : MonoBehaviour
     private void resetDigger()
     {
         dig.transform.localPosition = Vector3.zero;
-    }
+        pickaxe_starter.transform.localPosition = Vector3.zero;
+        pickaxe_copper.transform.localPosition = Vector3.zero;
+        pickaxe_iron.transform.localPosition = Vector3.zero;
+        pickaxe_gold.transform.localPosition = Vector3.zero;
+        pickaxe_diamond.transform.localPosition = Vector3.zero;
+}
 }

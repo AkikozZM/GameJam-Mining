@@ -125,4 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack: 4
-  durability: 30
+  durability: 3
+  quality: 4
