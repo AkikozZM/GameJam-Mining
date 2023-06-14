@@ -14,11 +14,12 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject prefab_iron;
     public GameObject prefab_gold;
     public GameObject prefab_diamond;
-
+    public GameObject charactor;
     public int depth = 0;
 
-    int map_width =7;
-    int map_height = 100;
+
+    int map_width = 7;
+    public int map_height = 100;
 
     int x_offset = 0;
     int y_offset = 0;
@@ -34,6 +35,8 @@ public class PerlinNoiseMap : MonoBehaviour
        // Start is called before the first frame update
     public void Start()
     {
+        charactor = GameObject.Find("Charactor");
+        this.depth = charactor.GetComponent<PlayerController>().depth;
         CreateTileset();
         CreateTileGroups();
         GenerateMap();
@@ -177,6 +180,10 @@ public class PerlinNoiseMap : MonoBehaviour
             (y - seed) / magnification
         );
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
+        if (y < 6 || y > 94)
+        {
+            return 1;
+        }
         if (this.depth < 30)
         {
             if (clamp_perlin < 0.5)

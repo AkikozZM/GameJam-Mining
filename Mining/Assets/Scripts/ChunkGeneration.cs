@@ -14,7 +14,9 @@ public class ChunkGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnChunk();
+        chunk = Instantiate(chunk, transform.position, transform.rotation);
+        chunk.GetComponent<PerlinNoiseMap>().map_height = 100;
+        setParent(chunk);
     }
 
     // Update is called once per frame
@@ -26,6 +28,8 @@ public class ChunkGeneration : MonoBehaviour
     public void spawnChunk()
     {
         chunk = Instantiate(chunk, transform.position, transform.rotation);
+        chunk.GetComponent<PerlinNoiseMap>().map_height = 93;
+        chunk.GetComponent<DestroyChunk>().chunkiter++;
         setParent(chunk);
     }
 

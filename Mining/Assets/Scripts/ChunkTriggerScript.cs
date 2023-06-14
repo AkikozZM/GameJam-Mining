@@ -8,8 +8,7 @@ public class ChunkTriggerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject temp = GameObject.Find("Spawn");
-        generation = temp.transform.Find("ChunkGenerator").GetComponent<ChunkGeneration>();
+        generation = GameObject.FindGameObjectWithTag("generation").GetComponent<ChunkGeneration>();
     }
 
     // Update is called once per frame
@@ -21,5 +20,6 @@ public class ChunkTriggerScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     { 
         generation.spawnChunk();
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 }
