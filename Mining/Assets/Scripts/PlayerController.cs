@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private ScoreManager scoreManager;
     private bool isActionInProgress = false;
+    private bool gameOver = false;
 
     public static bool needToSwitch = false;
 
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             isActionInProgress = false;
         }
-        if (!isActionInProgress)
+        if (!isActionInProgress && !gameOver)
         {
             StartCoroutine(PlayerAction());
         }
@@ -422,5 +423,14 @@ public class PlayerController : MonoBehaviour
         pickaxe_iron.transform.localPosition = Vector3.zero;
         pickaxe_gold.transform.localPosition = Vector3.zero;
         pickaxe_diamond.transform.localPosition = Vector3.zero;
-}
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("GameOver"))
+        {
+            Debug.Log("GameOver");
+            gameOver = true;
+
+        }
+    }
 }

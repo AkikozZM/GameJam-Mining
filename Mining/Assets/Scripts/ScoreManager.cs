@@ -11,14 +11,26 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI gold;
     public TextMeshProUGUI diamond;
     public TextMeshProUGUI currentAxe;
+    public TextMeshProUGUI score;
     static int copperPoints = 0;
     static int ironPoints = 0;
     static int goldPoints = 0;
     static int diamondPoints = 0;
     static string currentAxeName = "Starter";
+    private int scorePoints = 0;
     void Start()
     {
         UpdatePointsUI();
+    }
+    private void Update()
+    {
+        updateScore();
+    }
+    private void updateScore()
+    {
+        GameObject charactor = GameObject.Find("Charactor");
+        scorePoints = charactor.GetComponent<PlayerController>().depth;
+        score.text = scorePoints.ToString();
     }
     private void UpdatePointsUI()
     {
