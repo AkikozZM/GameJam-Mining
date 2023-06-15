@@ -82,7 +82,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2314724274278213019}
   - component: {fileID: 2314724274278213018}
-  - component: {fileID: 7164821412757793136}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Untagged
@@ -125,19 +124,6 @@ MonoBehaviour:
   prefab_iron: {fileID: 2195679341211529777, guid: 1a332f35a00712c43a656ad2a9104cc4, type: 3}
   prefab_gold: {fileID: 8400574092744778783, guid: 719ca4249575114429dd052827883245, type: 3}
   prefab_diamond: {fileID: 6773117648268859223, guid: 9a392d07b2a96a243869ae3a987e691a, type: 3}
+  charactor: {fileID: 0}
   depth: 0
   map_height: 50
---- !u!114 &7164821412757793136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2314724274278213016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2711cc158d2dcfc4da9ce98d6dfcd90e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawn: {fileID: 0}
-  deadZone: 100
