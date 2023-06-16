@@ -29,7 +29,7 @@ public class ChunkGeneration : MonoBehaviour
     {
         chunk = Instantiate(chunk, transform.position, transform.rotation);
         chunk.GetComponent<PerlinNoiseMap>().map_height = 93;
-        chunk.GetComponent<DestroyChunk>().chunkiter++;
+        //chunk.GetComponent<DestroyChunk>().chunkiter++;
         setParent(chunk);
     }
 
