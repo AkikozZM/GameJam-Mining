@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public GameObject pickaxe_gold;
     public GameObject pickaxe_diamond;
     public int depth;
+    public Sprite idle1;
+    public Sprite idle2;
+    public Sprite idle3;
 
     private ScoreManager scoreManager;
     private bool isActionInProgress = false;
@@ -31,7 +34,20 @@ public class PlayerController : MonoBehaviour
         createStarter();
         GameObject scoreManagerObj = GameObject.Find("Canvas");
         scoreManager = scoreManagerObj.GetComponent<ScoreManager>();
+        StartCoroutine(idle());
         
+    }
+    private IEnumerator idle()
+    {
+        while(true)
+        {
+            transform.GetComponent<SpriteRenderer>().sprite = idle1;
+            yield return new WaitForSeconds(0.2f);
+            transform.GetComponent<SpriteRenderer>().sprite = idle2;
+            yield return new WaitForSeconds(0.2f);
+            transform.GetComponent<SpriteRenderer>().sprite = idle3;
+            yield return new WaitForSeconds(0.2f);
+        }
     }
  
     private void createStarter()
@@ -316,6 +332,7 @@ public class PlayerController : MonoBehaviour
         bool isBlock = false;
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            transform.GetComponent<SpriteRenderer>().flipX = true;
             if (DetectBlocks(Vector3.left))
             {
                 PlayerDig(Vector2.left);
@@ -337,7 +354,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            
+            transform.GetComponent<SpriteRenderer>().flipX = false;
             if (DetectBlocks(Vector3.right))
             {
                 PlayerDig(Vector2.right);
@@ -402,16 +419,19 @@ public class PlayerController : MonoBehaviour
         if (direction == Vector2.down)
         {
             dig.SetActive(true);
-            dig.transform.Translate(0, -0.6f, 0);
+            dig.transform.localScale = new Vector3(1, -1, 1);
+            dig.transform.Translate(0, -0.4f, 0);
         } 
         else if (direction == Vector2.left)
         {
             dig.SetActive(true);
+            dig.transform.localScale = new Vector3(-1, 1, 1);
             dig.transform.Translate(-0.6f, 0, 0);
         } 
         else if (direction == Vector2.right)
         {
             dig.SetActive(true);
+            dig.transform.localScale = new Vector3(1, 1, 1);
             dig.transform.Translate(0.6f, 0, 0);
         }
     }
@@ -419,10 +439,15 @@ public class PlayerController : MonoBehaviour
     {
         dig.transform.localPosition = Vector3.zero;
         pickaxe_starter.transform.localPosition = Vector3.zero;
+        pickaxe_starter.transform.localScale = new Vector3(0.3f, 0.3f, 1);
         pickaxe_copper.transform.localPosition = Vector3.zero;
+        pickaxe_copper.transform.localScale = new Vector3(0.3f, 0.3f, 1);
         pickaxe_iron.transform.localPosition = Vector3.zero;
+        pickaxe_iron.transform.localScale = new Vector3(0.3f, 0.3f, 1);
         pickaxe_gold.transform.localPosition = Vector3.zero;
+        pickaxe_gold.transform.localScale = new Vector3(0.3f, 0.3f, 1);
         pickaxe_diamond.transform.localPosition = Vector3.zero;
+        pickaxe_diamond.transform.localScale = new Vector3(0.3f, 0.3f, 1);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -430,6 +455,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("GameOver");
             gameOver = true;
+            scoreManager.displayGameOver();
 
         }
     }

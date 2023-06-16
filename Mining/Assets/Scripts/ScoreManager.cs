@@ -12,26 +12,44 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI gold;
     public TextMeshProUGUI diamond;
     public TextMeshProUGUI currentAxe;
-    public TextMeshProUGUI score;
+    public TextMeshProUGUI gameOverScore;
+    public TextMeshProUGUI displayScore;
     static int copperPoints = 0;
     static int ironPoints = 0;
     static int goldPoints = 0;
     static int diamondPoints = 0;
     static string currentAxeName = "Starter";
     private int scorePoints = 0;
+    public int copperValue;
+    public int ironValue;
+    public int goldValue;
+    public int diamondValue;
+    public GameObject gameover;
     void Start()
     {
+        resetAllScores();
         UpdatePointsUI();
     }
     private void Update()
     {
         updateScore();
     }
+    private void resetAllScores()
+    {
+        copperPoints = 0;
+        ironPoints = 0;
+        goldPoints = 0;
+        diamondPoints = 0;
+    }
     private void updateScore()
     {
-        GameObject charactor = GameObject.Find("Charactor");
-        scorePoints = charactor.GetComponent<PlayerController>().depth;
-        score.text = scorePoints.ToString();
+        scorePoints = 
+            copperPoints * copperValue + 
+            ironPoints * ironValue + 
+            goldPoints * goldValue + 
+            diamondPoints * diamondValue;
+        gameOverScore.text = scorePoints.ToString();
+        displayScore.text = scorePoints.ToString();
     }
     private void UpdatePointsUI()
     {
@@ -40,6 +58,10 @@ public class ScoreManager : MonoBehaviour
         gold.text = goldPoints.ToString();
         diamond.text = diamondPoints.ToString();
         currentAxe.text = getCurrentAxe();
+    }
+    public void displayGameOver()
+    {
+        gameover.SetActive(true);
     }
     public void setCurrentAxeName(string name)
     {

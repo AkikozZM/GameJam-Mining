@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4206479363257243079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.30881804, y: 0.26095816, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.9411588, a: 1}
+  m_Sprite: {fileID: 21300000, guid: fa92006ea8abd06449c921afedeb497d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,3 +127,6 @@ MonoBehaviour:
   durability: 1
   type: dirt
   scoreManager: {fileID: 0}
+  broken25: {fileID: 21300000, guid: 17149421eba87874f8b0b7a08f9739cd, type: 3}
+  broken50: {fileID: 21300000, guid: 6c74d0cd0e141d94b8ab63f3827b8ae1, type: 3}
+  broken75: {fileID: 21300000, guid: ab8bf962a094e3d46929efa1dd039b82, type: 3}
