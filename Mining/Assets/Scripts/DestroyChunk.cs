@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class DestroyChunk : MonoBehaviour
 {
-    public GameObject spawn;
-    public float deadZone = 100;
-    public float chunkiter = 1;
+    public int chunkiter;
     // Start is called before the first frame update
     void Start()
     {
-        spawn = GameObject.Find("Spawn");
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (spawn.transform.position.y > (100.5*chunkiter)-5 && spawn.transform.position.y < (110.5*chunkiter)-5)
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("ChunkDestroyer"))
         {
+            print("I'm getting deleted!");
             Destroy(gameObject);
+            chunkiter++;
         }
+           
     }
 }

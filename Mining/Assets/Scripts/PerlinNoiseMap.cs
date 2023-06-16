@@ -19,7 +19,7 @@ public class PerlinNoiseMap : MonoBehaviour
 
 
     int map_width = 7;
-    public int map_height = 100;
+    public int map_height = 50;
 
     int x_offset = 0;
     int y_offset = 0;
@@ -180,10 +180,11 @@ public class PerlinNoiseMap : MonoBehaviour
             (y - seed) / magnification
         );
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        if (y < 6 || y > 94)
+        if (y < 6 || y > (map_height-6))
         {
             return 1;
         }
+       
         if (this.depth < 30)
         {
             if (clamp_perlin < 0.5)

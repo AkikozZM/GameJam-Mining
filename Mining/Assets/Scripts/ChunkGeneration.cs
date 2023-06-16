@@ -6,17 +6,23 @@ public class ChunkGeneration : MonoBehaviour
 {
     public GameObject chunk;
     public GameObject spawn;
-    public float spawnRate = 10;
-    public float timer = 0;
+    //public GameObject prefab;
     public float depth = 0;
-    public float count = 0;
+    int chunkiter = 0;
+    bool changed = false;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         chunk = Instantiate(chunk, transform.position, transform.rotation);
-        chunk.GetComponent<PerlinNoiseMap>().map_height = 100;
+        chunk.name = "chunk" + chunkiter;
+        chunkiter++;
+        //chunk.GetComponent<PerlinNoiseMap>().map_height = 50;
+
         setParent(chunk);
+
+
     }
 
     // Update is called once per frame
@@ -27,10 +33,25 @@ public class ChunkGeneration : MonoBehaviour
 
     public void spawnChunk()
     {
+        if (!changed)
+        {
+            transform.Translate(0, -8f, 0);
+            changed = true;
+        }
+        //else
+        //{
+        //    transform.Translate(0, -1f, 0);
+            
+        //}
+        PerlinNoiseMap script = chunk.GetComponent<PerlinNoiseMap>();
+        //script.map_height = 90;
         chunk = Instantiate(chunk, transform.position, transform.rotation);
-        chunk.GetComponent<PerlinNoiseMap>().map_height = 93;
-        //chunk.GetComponent<DestroyChunk>().chunkiter++;
+        chunk.name = "chunk" + chunkiter;
+        //chunk.GetComponent<PerlinNoiseMap>().map_height = 90;
+        chunkiter++;
+
         setParent(chunk);
+
     }
 
     void setParent (GameObject chunk)
