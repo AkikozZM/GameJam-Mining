@@ -120,12 +120,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_empty: {fileID: 4727937791180669055, guid: bd3901340f680fc4982e09dd56fd8425, type: 3}
-  prefab_stone: {fileID: 2195679341211529777, guid: 1a332f35a00712c43a656ad2a9104cc4, type: 3}
   prefab_dirt: {fileID: 4206479363257243079, guid: 20f264e96e87a294fb85b92ba2c0c742, type: 3}
+  prefab_stone: {fileID: 6267323240692519692, guid: aa2ade4f0a5cdcb4391a8249349925b3, type: 3}
   prefab_copper: {fileID: 8649588122739145636, guid: 66f259b2093af724882716b580bb1057, type: 3}
   prefab_iron: {fileID: 2195679341211529777, guid: 1a332f35a00712c43a656ad2a9104cc4, type: 3}
   prefab_gold: {fileID: 8400574092744778783, guid: 719ca4249575114429dd052827883245, type: 3}
   prefab_diamond: {fileID: 6773117648268859223, guid: 9a392d07b2a96a243869ae3a987e691a, type: 3}
+  prefab_bedrock: {fileID: 6773117648268859223, guid: 30177c18b2e874f39991788c136b793a, type: 3}
   charactor: {fileID: 0}
   depth: 0
   map_height: 50

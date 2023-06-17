@@ -8,12 +8,13 @@ public class PerlinNoiseMap : MonoBehaviour
     Dictionary<int, GameObject> tile_groups;
 
     public GameObject prefab_empty;
-    public GameObject prefab_stone;
     public GameObject prefab_dirt;
+    public GameObject prefab_stone;
     public GameObject prefab_copper;
     public GameObject prefab_iron;
     public GameObject prefab_gold;
     public GameObject prefab_diamond;
+    public GameObject prefab_bedrock;
     public GameObject charactor;
     public int depth = 0;
 
@@ -44,6 +45,8 @@ public class PerlinNoiseMap : MonoBehaviour
         GenerateIron();
         GenerateGold();
         GenerateDiamond();
+        GenerateStructure1(20);
+        GenerateStructure2(30);
     }
 
     public void CreateTileset() {
@@ -55,6 +58,7 @@ public class PerlinNoiseMap : MonoBehaviour
         tileset.Add(4, prefab_iron);
         tileset.Add(5, prefab_gold);
         tileset.Add(6, prefab_diamond);
+        tileset.Add(7, prefab_bedrock);
     }
 
     public void CreateTileGroups() {
@@ -172,6 +176,38 @@ public class PerlinNoiseMap : MonoBehaviour
 
     }
 
+    public void GenerateStructure1(int depth_start)
+    {
+        for (int x = 0; x < map_width; x++)
+        {
+            //noise_grid.Add(new List<int>());
+            //tile_grid.Add(new List<GameObject>());
+            for (int y = depth_start; y < (depth_start + 8); y++)
+            {
+                int tile_id = GetIdUsingStructure1Generation(x, y, depth_start);
+                noise_grid[x].Add(tile_id);
+                CreateTile(tile_id, x, y);
+
+            }
+        }
+    }
+
+    public void GenerateStructure2(int depth_start)
+    {
+        for (int x = 0; x < map_width; x++)
+        {
+            //noise_grid.Add(new List<int>());
+            //tile_grid.Add(new List<GameObject>());
+            for (int y = depth_start; y < (depth_start + 8); y++)
+            {
+                int tile_id = GetIdUsingStructure2Generation(x, y, depth_start);
+                noise_grid[x].Add(tile_id);
+                CreateTile(tile_id, x, y);
+
+            }
+        }
+    }
+
     int GetIdUsingPerlinCaves(int x, int y, int seed)
     {
      
@@ -180,10 +216,17 @@ public class PerlinNoiseMap : MonoBehaviour
             (y - seed) / magnification
         );
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        if (y < 6 || y > (map_height-6))
+        if ((y> 0 && y < 5) || y > (map_height-2))
         {
             return 1;
         }
+        else if( y== 0)
+        {
+            return 0;
+        }
+  
+
+        
        
         if (this.depth < 30)
         {
@@ -443,6 +486,81 @@ public class PerlinNoiseMap : MonoBehaviour
             }
         }
 
+    }
+
+    int GetIdUsingStructure1Generation(int x, int y, int depth_start)
+    {
+        if (y > (depth_start + 2))
+        {
+            if (x % 2 == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+        else
+        {
+            if (x % 4 == 0)
+            {
+                return 6;
+            }
+            else if(x%2 == 0)
+            {
+                return 5;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+    }
+
+    int GetIdUsingStructure2Generation(int x, int y, int depth_start)
+    {
+        if (x == 0 || x == map_width-1)
+        {
+            return 0;
+        }
+        else if (x==1 || x == map_width - 2)
+        {
+            return 7;
+        }
+        else
+        {
+            if (y == depth_start)
+            {
+                return 5;
+            }
+            else if (y % 2 == 0)
+            {
+                return 0;
+            }
+            else
+            { 
+                if ((y-1) % 4 == 0)
+                {
+                    if (x == 2)
+                    {
+                        return 0;
+                    } else
+                    {
+                        return 7;
+                    }
+                } else
+                {
+                    if (x == 4)
+                    {
+                        return 0;
+                    } else
+                    {
+                        return 7;
+                    }
+                }
+            }
+        }
     }
 
     void CreateTile(int tile_id, int x, int y)
