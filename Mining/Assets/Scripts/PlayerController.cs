@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private ScoreManager scoreManager;
     private bool isActionInProgress = false;
-    private bool gameOver = false;
+    public bool gameOver = false;
 
     public static bool needToSwitch = false;
 
@@ -458,5 +458,9 @@ public class PlayerController : MonoBehaviour
             scoreManager.displayGameOver();
 
         }
+    }
+    public void gameStart()
+    {
+        gameOver = false;
     }
 }

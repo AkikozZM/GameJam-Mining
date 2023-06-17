@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using LootLocker.Requests;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI currentAxe;
     public TextMeshProUGUI gameOverScore;
     public TextMeshProUGUI displayScore;
+    public TextMeshProUGUI inputName;
+
     static int copperPoints = 0;
     static int ironPoints = 0;
     static int goldPoints = 0;
@@ -24,7 +27,10 @@ public class ScoreManager : MonoBehaviour
     public int ironValue;
     public int goldValue;
     public int diamondValue;
-    public GameObject gameover;
+    public GameObject gameover_UI;
+    public GameObject leaderboard_UI;
+    public LeaderBoard leaderboard_obj;
+
     void Start()
     {
         resetAllScores();
@@ -33,6 +39,20 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         updateScore();
+    }
+    public void setPlayerName()
+    {
+        LootLockerSDKManager.SetPlayerName(inputName.text, (response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Successfully set player name");
+            }
+            else
+            {
+                Debug.Log("Cannot set player name" + response.Error);
+            }
+        });
     }
     private void resetAllScores()
     {
@@ -59,9 +79,17 @@ public class ScoreManager : MonoBehaviour
         diamond.text = diamondPoints.ToString();
         currentAxe.text = getCurrentAxe();
     }
+
     public void displayGameOver()
     {
-        gameover.SetActive(true);
+        gameover_UI.SetActive(true);
+        //submit player score
+        StartCoroutine(submitScore());
+        
+    }
+    private IEnumerator submitScore()
+    {
+        yield return leaderboard_obj.SubmitScoreRoutine(scorePoints);
     }
     public void setCurrentAxeName(string name)
     {
@@ -130,4 +158,14 @@ public class ScoreManager : MonoBehaviour
         UpdatePointsUI();
     }
 
+    public void displayLeaderBoard()
+    {
+        gameover_UI.SetActive(false);
+        leaderboard_UI.SetActive(true);
+        StartCoroutine(loadGlobalLeaderBoard());
+    }
+    private IEnumerator loadGlobalLeaderBoard()
+    {
+        yield return leaderboard_obj.FetchTopHighscoreRoutine();
+    }
 }
