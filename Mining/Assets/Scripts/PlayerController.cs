@@ -76,8 +76,21 @@ public class PlayerController : MonoBehaviour
         pickaxe_diamond.transform.SetParent(dig.transform);
         pickaxe_diamond.transform.localPosition = new Vector3(0, 0, 0);
     }
+    private void checkCurrentAxeDurability()
+    {
+        GameObject curr = getCurrentAxe();
+        if (curr.GetComponent<Digger>().durability <= 0)
+        {
+            needToSwitch = true;
+        } else
+        {
+            needToSwitch = false;
+        }
+
+    }
     void Update()
     {
+        checkCurrentAxeDurability();
         if (!OnGround())
         {
             isActionInProgress = true;
@@ -97,11 +110,12 @@ public class PlayerController : MonoBehaviour
         }
         if (needToSwitch)
         {
-            needToSwitch = false;
+            
             GameObject curr = getCurrentAxe();
             moveToBag(curr);
             GameObject pick = pickOneAxeToHand();
             moveToHand(pick);
+            needToSwitch = false;
         }
         //set axe name to UI
         scoreManager.setCurrentAxeName(getCurrentAxeName(getCurrentAxe()));
@@ -154,7 +168,6 @@ public class PlayerController : MonoBehaviour
     {
         if (bag.transform.Find(axe) != null)
         {
-            Debug.Log("true");
             return true;
         } 
         return false;
@@ -177,19 +190,19 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject axe in axes)
         {
             if (axe.gameObject.GetComponent<Digger>().quality == 5
-                && axe.gameObject.GetComponent<Digger>().durability != 0)
+                && axe.gameObject.GetComponent<Digger>().durability > 0)
             {
                 map[5] = axe;
             } else if (axe.gameObject.GetComponent<Digger>().quality == 4
-                && axe.gameObject.GetComponent<Digger>().durability != 0)
+                && axe.gameObject.GetComponent<Digger>().durability > 0)
             {
                 map[4] = axe;
             } else if (axe.gameObject.GetComponent<Digger>().quality == 3
-                && axe.gameObject.GetComponent<Digger>().durability != 0)
+                && axe.gameObject.GetComponent<Digger>().durability > 0)
             {
                 map[3] = axe;
             } else if (axe.gameObject.GetComponent<Digger>().quality == 2
-                && axe.gameObject.GetComponent<Digger>().durability != 0)
+                && axe.gameObject.GetComponent<Digger>().durability > 0)
             {
                 map[2] = axe;
             } else if (axe.gameObject.GetComponent<Digger>().quality == 1)
@@ -447,23 +460,10 @@ public class PlayerController : MonoBehaviour
         pickaxe_diamond.transform.localPosition = Vector3.zero;
         pickaxe_diamond.transform.localScale = new Vector3(0.3f, 0.3f, 1);
     }
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("GameOver"))
-        {
-            Debug.Log("GameOver");
-            gameOver = true;
-            scoreManager.displayGameOver();
-
-        }
-    }
-    */
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("GameOver"))
         {
-            Debug.Log("GameOver");
             gameOver = true;
             scoreManager.displayGameOver();
         }
