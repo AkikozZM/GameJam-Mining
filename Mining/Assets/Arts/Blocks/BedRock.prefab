@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae060f0823629df41a90da2e96f62354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durability: 5
-  type: diamond
+  durability: 10
+  type: none
   scoreManager: {fileID: 0}
   broken25: {fileID: 21300000, guid: 17149421eba87874f8b0b7a08f9739cd, type: 3}
   broken50: {fileID: 21300000, guid: 6c74d0cd0e141d94b8ab63f3827b8ae1, type: 3}
