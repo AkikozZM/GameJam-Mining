@@ -16,7 +16,6 @@ public class ChunkGeneration : MonoBehaviour
         chunk = Instantiate(chunk, transform.position, transform.rotation);
         chunk.name = "chunk" + chunkiter;
         chunkiter++;
-        //chunk.GetComponent<PerlinNoiseMap>().map_height = 50;
 
         setParent(chunk);
 
@@ -36,11 +35,6 @@ public class ChunkGeneration : MonoBehaviour
             transform.Translate(0, -8f, 0);
             changed = true;
         }
-        //else
-        //{
-        //    transform.Translate(0, -1f, 0);
-            
-        //}
         PerlinNoiseMap script = chunk.GetComponent<PerlinNoiseMap>();
         //script.map_height = 90;
         chunk = Instantiate(chunk, transform.position, transform.rotation);

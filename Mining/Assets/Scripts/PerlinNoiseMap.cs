@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +21,6 @@ public class PerlinNoiseMap : MonoBehaviour
 
     int map_width = 7;
     public int map_height = 50;
-
-    int x_offset = 0;
-    int y_offset = 0;
 
 
     //Recommend 4 to 20
@@ -210,9 +206,8 @@ public class PerlinNoiseMap : MonoBehaviour
     {
         for (int x = 0; x < map_width; x++)
         {
-            //noise_grid.Add(new List<int>());
-            //tile_grid.Add(new List<GameObject>());
-            for (int y = depth_start; y < (depth_start + 8); y++)
+
+            for (int y = depth_start; y < (depth_start + 6); y++)
             {
                 int tile_id = GetIdUsingStructure2Generation(x, y, depth_start);
                 noise_grid[x][y] = tile_id;
@@ -244,11 +239,11 @@ public class PerlinNoiseMap : MonoBehaviour
        
         if (this.depth < 30)
         {
-            if (clamp_perlin < 0.5)
+            if (clamp_perlin < 0.45)
             {
                 return 0;
             }
-            else if (clamp_perlin >= 0.5 && clamp_perlin < 0.9)
+            else if (clamp_perlin >= 0.45 && clamp_perlin < 0.9)
             {
                 return 1;
             }
@@ -277,11 +272,11 @@ public class PerlinNoiseMap : MonoBehaviour
         //All lower depths
         else
         {
-            if (clamp_perlin < 0.3)
+            if (clamp_perlin < 0.35)
             {
                 return 0;
             }
-            else if (clamp_perlin >= 0.3 && clamp_perlin < 0.7)
+            else if (clamp_perlin >= 0.35 && clamp_perlin < 0.7)
             {
                 return 1;
             }
@@ -351,11 +346,7 @@ public class PerlinNoiseMap : MonoBehaviour
         );
 
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        //print(clamp_perlin);
-        //float scale_perlin = clamp_perlin * tileset.Count;
 
-
-        //Min depth of being able to spawn
         if (this.depth < 50)
         {
             return -1;
@@ -405,8 +396,6 @@ public class PerlinNoiseMap : MonoBehaviour
         );
 
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        //print(clamp_perlin);
-        //float scale_perlin = clamp_perlin * tileset.Count;
 
         if (this.depth < 100)
         {
@@ -458,8 +447,7 @@ public class PerlinNoiseMap : MonoBehaviour
         );
 
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
-        //print(clamp_perlin);
-        //float scale_perlin = clamp_perlin * tileset.Count;
+
 
         if (this.depth < 150)
         {
