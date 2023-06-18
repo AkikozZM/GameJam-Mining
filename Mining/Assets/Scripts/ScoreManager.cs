@@ -16,6 +16,8 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI gameOverScore;
     public TextMeshProUGUI displayScore;
     public TextMeshProUGUI inputName;
+    public TextMeshProUGUI atk;
+    public TextMeshProUGUI dur;
 
     static int copperPoints = 0;
     static int ironPoints = 0;
@@ -167,5 +169,10 @@ public class ScoreManager : MonoBehaviour
     private IEnumerator loadGlobalLeaderBoard()
     {
         yield return leaderboard_obj.FetchTopHighscoreRoutine();
+    }
+    public void updateAtkAndDur(int atk, int dur)
+    {
+        this.atk.text = atk.ToString();
+        this.dur.text = dur.ToString();
     }
 }

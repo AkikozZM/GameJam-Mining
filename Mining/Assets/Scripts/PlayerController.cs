@@ -108,7 +108,10 @@ public class PlayerController : MonoBehaviour
             GameObject pick = pickOneAxeToHand();
             moveToHand(pick);
         }
+        //set axe name to UI
         scoreManager.setCurrentAxeName(getCurrentAxeName(getCurrentAxe()));
+        //set axe ability to UI
+        scoreManager.updateAtkAndDur(getCurrentAxe().GetComponent<Digger>().attack, getCurrentAxe().GetComponent<Digger>().durability);
     }
     private string getCurrentAxeName(GameObject axe)
     {
@@ -449,6 +452,7 @@ public class PlayerController : MonoBehaviour
         pickaxe_diamond.transform.localPosition = Vector3.zero;
         pickaxe_diamond.transform.localScale = new Vector3(0.3f, 0.3f, 1);
     }
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("GameOver"))
@@ -457,6 +461,16 @@ public class PlayerController : MonoBehaviour
             gameOver = true;
             scoreManager.displayGameOver();
 
+        }
+    }
+    */
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("GameOver"))
+        {
+            Debug.Log("GameOver");
+            gameOver = true;
+            scoreManager.displayGameOver();
         }
     }
     public void gameStart()

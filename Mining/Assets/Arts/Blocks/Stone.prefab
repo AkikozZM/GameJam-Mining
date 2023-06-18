@@ -127,3 +127,7 @@ MonoBehaviour:
   durability: 2
   type: stone
   scoreManager: {fileID: 0}
+  broken25: {fileID: 0}
+  broken50: {fileID: 0}
+  broken75: {fileID: 0}
+  currentDura: 0

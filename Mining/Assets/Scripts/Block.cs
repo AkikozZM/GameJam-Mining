@@ -11,9 +11,13 @@ public class Block : MonoBehaviour
     public Sprite broken50;
     public Sprite broken75;
     public int currentDura;
+    private AudioSource audioSource;
+    private AudioSource audioSource2;
     private void Start()
     {
         GameObject scoreManagerObj = GameObject.Find("Canvas");
+        audioSource = GameObject.Find("collect_sound").GetComponent<AudioSource>();
+        audioSource2 = GameObject.Find("collect_hit").GetComponent<AudioSource>();
         scoreManager = scoreManagerObj.GetComponent<ScoreManager>();
         currentDura = durability;
     }
@@ -39,7 +43,12 @@ public class Block : MonoBehaviour
         currentDura -= hit;
         if (currentDura <= 0)
         {
+            audioSource.Play();
             Destroy(gameObject);
+        }
+        else
+        {
+            audioSource2.Play();
         }
     }
     private void OnDestroy()
