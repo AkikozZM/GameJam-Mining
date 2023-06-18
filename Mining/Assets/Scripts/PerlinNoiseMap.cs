@@ -17,6 +17,7 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject prefab_bedrock;
     public GameObject charactor;
     public int depth = 0;
+    bool changed = false;
 
 
     int map_width = 7;
@@ -45,8 +46,20 @@ public class PerlinNoiseMap : MonoBehaviour
         GenerateIron();
         GenerateGold();
         GenerateDiamond();
-        GenerateStructure1(20);
-        GenerateStructure2(30);
+        int x = UnityEngine.Random.Range(0, 3);
+        if (x == 0)
+        {
+            GenerateStructure1(UnityEngine.Random.Range(10, 35));
+        }
+        else if (x == 1)
+        {
+            GenerateStructure2(UnityEngine.Random.Range(10, 35));
+        } else if (x == 2)
+        {
+            int gen1_depth = UnityEngine.Random.Range(15, 30);
+            GenerateStructure2(gen1_depth);
+            GenerateStructure1(gen1_depth + 10);
+        }
     }
 
     public void CreateTileset() {
@@ -81,7 +94,8 @@ public class PerlinNoiseMap : MonoBehaviour
             {
                 int tile_id = GetIdUsingPerlinCaves(x, y, seed);
                 noise_grid[x].Add(tile_id);
-                CreateTile(tile_id, x, y);
+                CreateTile(tile_id, x, y, this.changed);
+                this.changed = true;
             }
         }
 
@@ -100,8 +114,8 @@ public class PerlinNoiseMap : MonoBehaviour
                     int tile_id = GetIdUsingPerlinCopper(x, y, seed);
                     if (tile_id != -1)
                     {
-                        noise_grid[x].Add(tile_id);
-                        CreateTile(tile_id, x, y);
+                        noise_grid[x][y] = tile_id;
+                        CreateTile(tile_id, x, y, this.changed);
                     }
                 }
     
@@ -122,8 +136,8 @@ public class PerlinNoiseMap : MonoBehaviour
                     int tile_id = GetIdUsingPerlinIron(x, y, seed);
                     if (tile_id != -1)
                     {
-                        noise_grid[x].Add(tile_id);
-                        CreateTile(tile_id, x, y);
+                        noise_grid[x][y] = tile_id;
+                        CreateTile(tile_id, x, y, this.changed);
                     }
                 }
 
@@ -144,8 +158,8 @@ public class PerlinNoiseMap : MonoBehaviour
                     int tile_id = GetIdUsingPerlinGold(x, y, seed);
                     if (tile_id != -1)
                     {
-                        noise_grid[x].Add(tile_id);
-                        CreateTile(tile_id, x, y);
+                        noise_grid[x][y] = tile_id;
+                        CreateTile(tile_id, x, y, this.changed);
                     }
                 }
 
@@ -166,8 +180,8 @@ public class PerlinNoiseMap : MonoBehaviour
                     int tile_id = GetIdUsingPerlinDiamond(x, y, seed);
                     if (tile_id != -1)
                     {
-                        noise_grid[x].Add(tile_id);
-                        CreateTile(tile_id, x, y);
+                        noise_grid[x][y] = tile_id;
+                        CreateTile(tile_id, x, y, this.changed);
                     }
                 }
 
@@ -185,8 +199,8 @@ public class PerlinNoiseMap : MonoBehaviour
             for (int y = depth_start; y < (depth_start + 8); y++)
             {
                 int tile_id = GetIdUsingStructure1Generation(x, y, depth_start);
-                noise_grid[x].Add(tile_id);
-                CreateTile(tile_id, x, y);
+                noise_grid[x][y] = tile_id;
+                CreateTile(tile_id, x, y, this.changed);
 
             }
         }
@@ -201,8 +215,8 @@ public class PerlinNoiseMap : MonoBehaviour
             for (int y = depth_start; y < (depth_start + 8); y++)
             {
                 int tile_id = GetIdUsingStructure2Generation(x, y, depth_start);
-                noise_grid[x].Add(tile_id);
-                CreateTile(tile_id, x, y);
+                noise_grid[x][y] = tile_id;
+                CreateTile(tile_id, x, y, this.changed);
 
             }
         }
@@ -563,7 +577,7 @@ public class PerlinNoiseMap : MonoBehaviour
         }
     }
 
-    void CreateTile(int tile_id, int x, int y)
+    void CreateTile(int tile_id, int x, int y, bool changed)
     {
         GameObject tile_prefab = tileset[tile_id];
         GameObject tile_group = tile_groups[tile_id];
@@ -571,7 +585,15 @@ public class PerlinNoiseMap : MonoBehaviour
 
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
         tile.transform.localPosition = new Vector3(x, y, 0);
-        tile_grid[x].Add(tile);
+        if (!changed)
+        {
+            tile_grid[x].Add(tile);
+        }
+        else
+        {
+            tile_grid[x].Add(tile);
+        }
+        
 
     }
 
