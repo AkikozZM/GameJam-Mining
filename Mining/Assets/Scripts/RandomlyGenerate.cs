@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomlyGenerate : MonoBehaviour
@@ -14,12 +12,6 @@ public class RandomlyGenerate : MonoBehaviour
     {
         spawnPosition = spawn.transform.position.y;
         this.GenerateSprites();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     void GenerateSprites()
     {
