@@ -125,9 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 2
-  type: stone
+  type: bad
   scoreManager: {fileID: 0}
   broken25: {fileID: 0}
   broken50: {fileID: 0}
   broken75: {fileID: 0}
   currentDura: 0
+  value: {fileID: 21300000, guid: 2c40329d7528fbe408fd1ac41f4bfefc, type: 3}

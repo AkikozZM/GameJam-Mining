@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Block : MonoBehaviour
@@ -9,13 +10,21 @@ public class Block : MonoBehaviour
     public Sprite broken50;
     public Sprite broken75;
     public int currentDura;
+    public GameObject value;
     private AudioSource audioSource;
     private AudioSource audioSource2;
+    private AudioSource audioSource3;
+    private void displayValue()
+    {
+        Instantiate(value, transform.position, Quaternion.identity); 
+    }
+
     private void Start()
     {
         GameObject scoreManagerObj = GameObject.Find("Canvas");
         audioSource = GameObject.Find("collect_sound").GetComponent<AudioSource>();
         audioSource2 = GameObject.Find("collect_hit").GetComponent<AudioSource>();
+        audioSource3 = GameObject.Find("collect_error").GetComponent<AudioSource>();
         scoreManager = scoreManagerObj.GetComponent<ScoreManager>();
         currentDura = durability;
     }
@@ -38,15 +47,22 @@ public class Block : MonoBehaviour
     }
     public void TakeHit(int hit)
     {
-        currentDura -= hit;
-        if (currentDura <= 0)
+        if (type != "bad")
         {
-            audioSource.Play();
-            Destroy(gameObject);
-        }
-        else
+            currentDura -= hit;
+            if (currentDura <= 0)
+            {
+                audioSource.Play();
+                displayValue();
+                Destroy(gameObject);
+            }
+            else
+            {
+                audioSource2.Play();
+            }
+        } else if (type == "bad")
         {
-            audioSource2.Play();
+            audioSource3.Play();
         }
     }
     private void OnDestroy()

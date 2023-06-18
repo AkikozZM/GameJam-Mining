@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class FloatUp : MonoBehaviour
 {
-    public float moveSpeed = 5;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position = transform.position + (Vector3.up * moveSpeed) * Time.deltaTime;
+        Destroy(gameObject, 1f);
     }
 }

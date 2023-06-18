@@ -131,3 +131,4 @@ MonoBehaviour:
   broken50: {fileID: 21300000, guid: 6c74d0cd0e141d94b8ab63f3827b8ae1, type: 3}
   broken75: {fileID: 21300000, guid: ab8bf962a094e3d46929efa1dd039b82, type: 3}
   currentDura: 0
+  value: {fileID: 2628392196056644421, guid: 844f8812f83dc3d45803667ed112f6c0, type: 3}
