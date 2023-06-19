@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
         {
             if (checkAxeInBag("Dig_diamond(Clone)") || checkAxeInHand("Dig_diamond(Clone)"))
             {
-                pickaxe_diamond.GetComponent<Digger>().durability += collectionPoints;
+                pickaxe_diamond.GetComponent<Digger>().durability += 3;
                 scoreManager.subtractDiamondPoints(collectionPoints);
                 //and move a best choice axe to hand
                 //get current axe
@@ -248,7 +248,7 @@ public class PlayerController : MonoBehaviour
         {
             if (checkAxeInBag("Dig_gold(Clone)") || checkAxeInHand("Dig_gold(Clone)"))
             {
-                pickaxe_gold.GetComponent<Digger>().durability += collectionPoints;
+                pickaxe_gold.GetComponent<Digger>().durability += 3;
                 scoreManager.subtractGoldPoints(collectionPoints);
                 //and move a best choice axe to hand
                 //get current axe
@@ -272,7 +272,7 @@ public class PlayerController : MonoBehaviour
         {
             if (checkAxeInBag("Dig_iron(Clone)") || checkAxeInHand("Dig_iron(Clone)"))
             {
-                pickaxe_iron.GetComponent<Digger>().durability += collectionPoints;
+                pickaxe_iron.GetComponent<Digger>().durability += 3;
                 scoreManager.subtractIronPoints(collectionPoints);
                 //and move a best choice axe to hand
                 //get current axe
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour
             if (checkAxeInBag("Dig_copper(Clone)") || checkAxeInHand("Dig_copper(Clone)"))
             {
                 //just increase the durability of this axe
-                pickaxe_copper.GetComponent<Digger>().durability += collectionPoints;
+                pickaxe_copper.GetComponent<Digger>().durability += 3;
                 //and consume current collection pts
                 scoreManager.subtractCopperPoints(collectionPoints);
                 //and move a best choice axe to hand
