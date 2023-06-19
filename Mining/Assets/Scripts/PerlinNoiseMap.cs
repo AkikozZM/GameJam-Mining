@@ -500,7 +500,7 @@ public class PerlinNoiseMap : MonoBehaviour
             }
             else
             {
-                return 2;
+                return 7;
             }
         }
         else
@@ -515,7 +515,7 @@ public class PerlinNoiseMap : MonoBehaviour
             }
             else
             {
-                return 2;
+                return 7;
             }
         }
     }

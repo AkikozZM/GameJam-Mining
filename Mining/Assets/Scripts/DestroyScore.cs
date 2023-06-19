@@ -6,10 +6,8 @@ public class DestroyScore : MonoBehaviour
 {
     void Start()
     {
-        //Start the coroutine we define below named ExampleCoroutine.
         StartCoroutine(ExampleCoroutine());
     }
-
     IEnumerator ExampleCoroutine()
     {
         //Print the time of when the function is first called.
